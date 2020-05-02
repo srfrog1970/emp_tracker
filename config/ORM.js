@@ -29,13 +29,13 @@ class ORM {
   }
 
   insert(table, columns, values) {
-    const queryString = `INSERT INTO ?? (${columns.join(
-      ", "
-    )}) VALUES (${table},${this.printQuestionMarks(values.length)})`;
+    console.log("columns", columns.toString());
+    console.log("values", values.toString());
+    const queryString = `INSERT INTO ${table} (${columns.toString()}) VALUES (${this.printQuestionMarks(
+      values.length
+    )})`;
 
-    console.log(queryString);
-
-    return this.connection.query(queryString, [table, ...values]);
+    return this.connection.query(queryString, values);
   }
   printQuestionMarks(numberOfValues) {
     const questionMarks = [];

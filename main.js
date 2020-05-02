@@ -9,6 +9,7 @@ const connection = require("./config/connection.js");
 const orm = require("./config/orm.js");
 
 // loop
+
 inquirer
   .prompt(Prompts.getMainMenu())
   .then((inquirerResponses) => {
@@ -19,8 +20,9 @@ inquirer
           .prompt(Prompts.getAddDepartments())
           .then((inquirerResponses) => {
             const deptArray = Object.values(inquirerResponses);
+            console.log(deptArray);
             orm
-              .insert("department", ["name"], deptArray)
+              .insert("department", "name", deptArray)
               .then((results) => {
                 if (results.affectedRows === 0) {
                   return console.log("Nothing updated!");
@@ -42,9 +44,10 @@ inquirer
                 if (results.affectedRows === 0) {
                   return console.log("Error on lookup");
                 }
-                console.log(results.join());
-                roleData = [roleTitle, roleSalary, results.join()];
-                console.log(roleData);
+                results = results[0].dept_id;
+
+                roleData = [roleTitle, roleSalary, results];
+
                 orm
                   .insert("role", ["title, salary", "dept_id"], roleData)
                   .then((results) => {
