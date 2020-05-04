@@ -11,9 +11,10 @@ const orm = require("./config/orm.js");
 // loop
 
 inquirer
-  .prompt(Prompts.getMainMenu())
+  .prompt(Prompts.getMainMenu(callback()))
   .then((inquirerResponses) => {
     mainRes = inquirerResponses.mainResponse;
+    console.log("hmmmm");
     switch (mainRes) {
       case "Add departments":
         inquirer
@@ -31,6 +32,7 @@ inquirer
               })
               .catch((err) => console.log(err));
           });
+        callback();
         break;
 
       case "Add roles":
@@ -86,7 +88,7 @@ inquirer
         break;
     }
   })
-  .catch((err) => {});
+  .catch(console.log("catch"));
 
 function addDepartments() {
   inquirer

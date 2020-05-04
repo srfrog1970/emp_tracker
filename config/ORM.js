@@ -22,6 +22,12 @@ class ORM {
     ]);
   }
 
+  findManager(first_name, last_name) {
+    const queryString =
+      "SELECT emp_id FROM employee WHERE first_name = ? AND last_name = ?";
+    return this.connection.query(queryString, [first_name, last_name]);
+  }
+
   selectManagers() {
     const queryString =
       "SELECT DISTINCT m.first_name, m.last_name FROM employee e JOIN employee m on e.manager_id = m.emp_id";
@@ -29,8 +35,8 @@ class ORM {
   }
 
   insert(table, columns, values) {
-    console.log("columns", columns.toString());
-    console.log("values", values.toString());
+    // console.log("columns", columns.toString());
+    // console.log("values", values.toString());
     const queryString = `INSERT INTO ${table} (${columns.toString()}) VALUES (${this.printQuestionMarks(
       values.length
     )})`;
